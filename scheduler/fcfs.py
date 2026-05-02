@@ -19,3 +19,6 @@ def fcfs(processes):
         gantt.append((p.pid, start, end))
 
     return processes, gantt
+
+
+# FCFS schedules processes in order of arrival, which can lead to long waiting times if a long job comes first
