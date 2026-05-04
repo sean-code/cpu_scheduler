@@ -1,8 +1,11 @@
 def calculate_averages(processes):
+    n = len(processes)
+
+    if n == 0:
+        return {"avg_waiting_time": 0, "avg_turnaround_time": 0}
+
     total_wt = sum(p.waiting_time for p in processes)
     total_tat = sum(p.turnaround_time for p in processes)
-
-    n = len(processes)
 
     return {
         "avg_waiting_time": total_wt / n,
