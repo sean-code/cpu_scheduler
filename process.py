@@ -4,7 +4,7 @@ class Process:
         self.arrival_time = arrival_time
         self.burst_time = burst_time
 
-        self.remaining_time = burst_time  # for Round Robin
+        self.remaining_time = burst_time  # for Round Robin Algo
         self.completion_time = 0
         self.turnaround_time = 0
         self.waiting_time = 0

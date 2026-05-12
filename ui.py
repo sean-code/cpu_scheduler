@@ -77,6 +77,27 @@ def run_simulation():
     plot_gantt(gantt)
 
 
+# Save Results in CSV file
+
+file_exists = False
+try:
+    with open("results.csv", "r"):
+        file_exists = True
+except FileNotFoundError:
+    pass
+
+with open("results.csv", "a", newline="") as f:
+    writer = csv.writer(f)
+
+    # Write header only once
+    if not file_exists:
+        writer.writerow(["Algorithm", "Process", "WT", "TAT"])
+
+    for p in result:
+        writer.writerow([algo, f"P{p.pid}", p.waiting_time, p.turnaround_time])
+        
+
+
 def plot_gantt(gantt):
     fig, ax = plt.subplots()
 
