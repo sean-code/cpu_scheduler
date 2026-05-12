@@ -43,3 +43,5 @@ def round_robin(processes, quantum):
             p.waiting_time = p.turnaround_time - p.burst_time
 
     return processes, gantt
+
+    ## Assigns A fixed quantum to each process

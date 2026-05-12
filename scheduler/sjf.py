@@ -35,3 +35,7 @@ def sjf(processes):
         completed.append(p)
 
     return completed, gantt
+
+
+
+    ## Selects the process with smallest burst time
