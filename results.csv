@@ -1,0 +1,13 @@
+Algorithm,Process,WT,TAT
+FCFS,P1,0,5
+FCFS,P2,4,7
+FCFS,P3,6,14
+FCFS,P4,13,19
+SJF,P1,0,5
+SJF,P2,4,7
+SJF,P4,5,11
+SJF,P3,12,20
+Round Robin,P1,9,14
+Round Robin,P2,7,10
+Round Robin,P3,12,20
+Round Robin,P4,11,17

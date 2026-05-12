@@ -8,6 +8,8 @@ from scheduler.round_robin import round_robin
 from utils.metrics import calculate_averages
 import matplotlib.pyplot as plt
 import csv
+import os
+from datetime import datetime
 
 
 process_entries = []
@@ -34,16 +36,16 @@ def run_simulation():
         at_val = at_entry.get().strip()
         bt_val = bt_entry.get().strip()
 
-        # Validate my empty fields
+        # Validate empty fields
         if not at_val or not bt_val:
             output_text.delete(1.0, tk.END)
-            output_text.insert(tk.END, " Error: Please fill all fields.\n")
+            output_text.insert(tk.END, "Error: Please fill all fields.\n")
             return
 
-        # Validate my numeric input
+        # Validate numeric input
         if not at_val.isdigit() or not bt_val.isdigit():
             output_text.delete(1.0, tk.END)
-            output_text.insert(tk.END, " Error: Only numeric values allowed.\n")
+            output_text.insert(tk.END, "Error: Only numeric values allowed.\n")
             return
 
         at = int(at_val)
@@ -54,7 +56,7 @@ def run_simulation():
     # Extra safety check
     if len(processes) == 0:
         output_text.delete(1.0, tk.END)
-        output_text.insert(tk.END, " No processes entered.\n")
+        output_text.insert(tk.END, "No processes entered.\n")
         return
 
     algo = algo_var.get()
@@ -73,29 +75,34 @@ def run_simulation():
     output_text.insert(tk.END, f"Averages: {averages}\n")
 
     for p in result:
-        output_text.insert(tk.END, f"P{p.pid} -> WT: {p.waiting_time}, TAT: {p.turnaround_time}\n")
+        output_text.insert(
+            tk.END,
+            f"P{p.pid} -> WT: {p.waiting_time}, "
+            f"TAT: {p.turnaround_time}\n"
+        )
 
-    plot_gantt(gantt)
+    # SAVE RESULTS TO CSV
+    file_exists = os.path.isfile("results.csv")
+
+    with open("results.csv", "a", newline="") as f:
+        writer = csv.writer(f)
+
+        if not file_exists:
+            writer.writerow(["Algorithm", "Process", "WT", "TAT"])
+
+        for p in result:
+            writer.writerow([
+                algo,
+                f"P{p.pid}",
+                p.waiting_time,
+                p.turnaround_time
+            ])
+
+    plot_gantt(gantt, algo)
 
 
 # Save Results in CSV file
 
-file_exists = False
-try:
-    with open("results.csv", "r"):
-        file_exists = True
-except FileNotFoundError:
-    pass
-
-with open("results.csv", "a", newline="") as f:
-    writer = csv.writer(f)
-
-    # Write header only once
-    if not file_exists:
-        writer.writerow(["Algorithm", "Process", "WT", "TAT"])
-
-    for p in result:
-        writer.writerow([algo, f"P{p.pid}", p.waiting_time, p.turnaround_time])
         
 
 
