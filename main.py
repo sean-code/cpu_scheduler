@@ -26,7 +26,7 @@ def run_and_store(name, func, processes, results_summary, *args):
 
 
 def main():
-    # 🔥 THIS is where user input comes in
+    # THIS is where my user input comes in
     processes = get_processes()
 
     results_summary = {}
@@ -35,7 +35,7 @@ def main():
     run_and_store("SJF", sjf, processes, results_summary)
     run_and_store("Round Robin (q=2)", round_robin, processes, results_summary, 2)
 
-    # 🔥 Final comparison output
+    # Final comparison output
     comparison_table(results_summary)
 
 

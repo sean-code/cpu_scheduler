@@ -33,16 +33,16 @@ def run_simulation():
         at_val = at_entry.get().strip()
         bt_val = bt_entry.get().strip()
 
-        # 🚨 Validate empty fields
+        # Validate my empty fields
         if not at_val or not bt_val:
             output_text.delete(1.0, tk.END)
-            output_text.insert(tk.END, "❌ Error: Please fill all fields.\n")
+            output_text.insert(tk.END, " Error: Please fill all fields.\n")
             return
 
-        # 🚨 Validate numeric input
+        # Validate my numeric input
         if not at_val.isdigit() or not bt_val.isdigit():
             output_text.delete(1.0, tk.END)
-            output_text.insert(tk.END, "❌ Error: Only numeric values allowed.\n")
+            output_text.insert(tk.END, " Error: Only numeric values allowed.\n")
             return
 
         at = int(at_val)
@@ -50,10 +50,10 @@ def run_simulation():
 
         processes.append(Process(i+1, at, bt))
 
-    # 🚨 Extra safety check
+    # Extra safety check
     if len(processes) == 0:
         output_text.delete(1.0, tk.END)
-        output_text.insert(tk.END, "❌ No processes entered.\n")
+        output_text.insert(tk.END, " No processes entered.\n")
         return
 
     algo = algo_var.get()
