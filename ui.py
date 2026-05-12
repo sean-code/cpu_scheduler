@@ -7,6 +7,7 @@ from scheduler.sjf import sjf
 from scheduler.round_robin import round_robin
 from utils.metrics import calculate_averages
 import matplotlib.pyplot as plt
+import csv
 
 
 process_entries = []
@@ -98,14 +99,26 @@ with open("results.csv", "a", newline="") as f:
         
 
 
-def plot_gantt(gantt):
+def plot_gantt(gantt, algo):
     fig, ax = plt.subplots()
 
     for pid, start, end in gantt:
         ax.barh(y=f"P{pid}", width=end-start, left=start)
 
     ax.set_xlabel("Time")
-    ax.set_title("Gantt Chart")
+    ax.set_title(f"Gantt Chart - {algo}")
+
+    # Create folder if it doesn't exist
+    os.makedirs("charts", exist_ok=True)
+
+    # Create unique filename using timestamp
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"charts/{algo.replace(' ', '_')}_{timestamp}.png"
+
+    # Save the figure
+    plt.savefig(filename)
+
+    print(f"Gantt chart saved as {filename}")
 
     plt.show()
 
